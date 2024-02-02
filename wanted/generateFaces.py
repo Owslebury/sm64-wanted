@@ -1,3 +1,4 @@
+from dis import Positions
 import random
 import pygame
 
@@ -13,7 +14,7 @@ def randomPositions(num_images, selected_characters, bottom_screen):
     for _ in range(num_images):
         random_image = random.choice(selected_characters)
         x = random.randint(0, (screen_width) - 58)
-        y = random.randint(0, (screen_height/2) - 58)
+        y = random.randint(0, (screen_height/2) - 68)
         positions.append((x, y))
         image_surface = pygame.image.fromstring(random_image[0].tobytes(), random_image[0].size, random_image[0].mode)
         bottom_screen.blit(image_surface, (x, y))
@@ -40,6 +41,7 @@ def arrangeImagesUniformly(selected_characters, bottom_screen):
     return positions
 
 def waitUntilClicked(positions_list,screen):
+    positions_list = [(x, y + 700) for x, y in positions_list]
     clock = pygame.time.Clock()
     clicked = False
 
@@ -54,9 +56,7 @@ def waitUntilClicked(positions_list,screen):
 
 
         for x, y in positions_list:
-            pygame.draw.rect(screen, (0, 0, 255), (x, y, image_width, image_height))
+            pygame.draw.rect(screen, (0, 0, 255), (x, y - 700, image_width, image_height))
 
         pygame.display.flip()
         clock.tick(60)
-
-
